@@ -1,37 +1,30 @@
 ﻿using ByteBankIO;
 using System.Text;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
-class Program
+partial class Program
 {
     static void Main(string[] args)
     {
-        var endereco = "contas.txt";
-        var numeroBytesLidos = -1;
-        var fluxoDoArquivo = new FileStream(endereco, FileMode.Open);
-        var buffer = new byte[1024];
+        var enderecoDoArquivo = "contas.txt";
 
-        numeroBytesLidos = fluxoDoArquivo.Read(buffer, 0, 1024);
-      
-        while (numeroBytesLidos > 0)
+        using (var fluxoDeArquivo = new FileStream(enderecoDoArquivo, FileMode.Open))
         {
-            EscreverBuffer(buffer);
-            numeroBytesLidos = fluxoDoArquivo.Read(buffer, 0, 1024);
-        }
+            var leitor = new StreamReader(fluxoDeArquivo);
 
-        Console.ReadLine();
-    }
+            //var linha = leitor.ReadLine();
 
-    static void EscreverBuffer(byte[] buffer)
-    {
-        var utfe8 = new UTF8Encoding();
+            //var texto = leitor.ReadToEnd();
+            //var numero = leitor.Read();
 
-        var texto = utfe8.GetString(buffer);
-        Console.Write(texto);
+            while (!leitor.EndOfStream)
+            {
+                var linha = leitor.ReadLine();
+                Console.WriteLine(linha);
+            }
 
-        //foreach (var meuByte in buffer) 
-        //{
-        //    Console.Write(meuByte);
-        //    Console.Write(" ");
-        //}
+            
+
+        }   
     }
 }
