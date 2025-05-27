@@ -14,7 +14,7 @@ public class _3_CriandoArquivo
 
         using (var fluxoDoArquivo = new FileStream(caminhoNovoArquivo, FileMode.Create))
         {
-            var contaComoString = "456, 7895, 4785.40, Gustavo Santos";
+            var contaComoString = "456,7895,4785.40,Gustavo Santos";
 
             var encoding = Encoding.UTF8;
 
@@ -31,7 +31,24 @@ public class _3_CriandoArquivo
         using (var fluxoDoArquivo = new FileStream(caminhoNovoArquivo, FileMode.Create))
         using (var escritor = new StreamWriter(fluxoDoArquivo))
         {
-            escritor.Write("456, 7895, 4785.40, Gustavo Silva");
+            escritor.Write("456,7895,4785.40,Gustavo Silva");
+        }
+    }
+
+    public static void TestaEscrita()
+    {
+        var caminhoNovoArquivo = "teste.txt";
+
+        using (var fluxoDoArquivo = new FileStream(caminhoNovoArquivo, FileMode.Create))
+        using (var escritor = new StreamWriter(fluxoDoArquivo))
+        {
+            for (int i = 0; i < 1000000; i++)
+            {
+                escritor.WriteLine($"Linha {i}");
+                escritor.Flush(); // Garante que a linha seja escrita imediatamente no arquivo
+                Console.WriteLine($"Linha {i} foi escrita no arquivo. Tecle enter...");
+                Console.ReadLine();
+            }
         }
     }
 }
